@@ -1,0 +1,27 @@
+# This demo workflow is to show the usage of self hosted runner in github actions
+# main.yml
+---
+name: Self.Hosted.Runner NodeJS Build
+on: 
+ workflow_dispatch:
+#  push:
+jobs: 
+  job1:
+   continue-on-error: true
+   runs-on: self-hosted
+   steps: 
+    - name: Clone the repo 
+      uses: actions/checkout@v4
+    - name: Install nodejs
+      uses: actions/setup-node@v4
+      with: 
+          node-version: 18
+          cache: 'npm'
+    - name: Install dependencies 
+      run: npm ci 
+    - name: Executes test cases
+      run: npm test
+    - name: Build the code 
+      run: npm run build 
+    - name: Deploy the code 
+      run: echo 'Deploy the code'
